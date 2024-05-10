@@ -1,27 +1,27 @@
-﻿#include <iostream>
+#include <iostream>
 using namespace std;
 
-class exeption : public invalid_argument {
+class exeption : public invalid_argument { // класс исключение, потомок класса invalid_argument
 
 public:
-    int t;
+    int t; // число
 
-    exeption(const char* er,int j): invalid_argument(er)
+    exeption(const char* er,int j): invalid_argument(er) // конструктор класса
     {
         t = j;
     }
 
-    void print() {
+    void print() { // метод вывода числа
     cout << t;
     }
 };
 
-class pr_ch {
+class pr_ch { // класс простое число
 public:
     int a;
-    pr_ch();
-    pr_ch(int b);
-    void print();
+    pr_ch(); // нулевой конструктор
+    pr_ch(int b); // конструктор с параметрами
+    void print(); // метод print
 };
 
 pr_ch::pr_ch() {
@@ -30,8 +30,8 @@ pr_ch::pr_ch() {
 
 pr_ch::pr_ch(int b) {
     int k = 0;
-    for (int i = 2; i<= floor(sqrt(b)); ++i) if (b % i == 0) ++k;
-    if (k > 0) throw exeption("Ошибка",b);
+    for (int i = 2; i<= floor(sqrt(b)); ++i) if (b % i == 0) ++k; // подсчет количества делителей число
+    if (k > 0) throw exeption("Ошибка",b); // если k > 0, то есть делителей больше двух, то создается класс исключения и ссылку на него выбрасывает throw, если throw срабатывает, программа в конструкторе дальше не идет
     a = b;
 }
 
@@ -42,15 +42,15 @@ void pr_ch::print() {
 
 int main()
 {
-    setlocale(LC_ALL, "Rus");
-    try{
+    setlocale(LC_ALL, "Rus"); // вывод в консоль на русском
+    try{ // блок контроля
         pr_ch obj(14);
         obj.print();
     }
     
-    catch (exeption& e) {
+    catch (exeption& e) { // блок обработки исключения
         e.print();
         cout << endl;
-        cout << e.what();
+        cout << e.what(); // what единственный метод класса invalid_argument, он служит для вывода сообщения об ошибке
     }
 }
